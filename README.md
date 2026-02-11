@@ -23,8 +23,32 @@ RememberSquare is a SwiftUI memory game. The app previews a sequence of highligh
 
 <table>
  <tr>
-  <td>
-   <img width="300" alt="RememberSquare Game Screen" src="Screenshots/ios-home.png">
+  <td align="center">
+   <img width="250" alt="Idle State - Start Screen" src="Screenshots/ios-home.png">
+   <br><b>Idle State</b><br>
+   <em>Press Start to begin</em>
+  </td>
+  <td align="center">
+   <img width="250" alt="Preview State - Memorizing Sequence" src="Screenshots/ios-preview.png">
+   <br><b>Preview State</b><br>
+   <em>Memorize the order</em>
+  </td>
+  <td align="center">
+   <img width="250" alt="Playing State - Your Turn" src="Screenshots/ios-playing.png">
+   <br><b>Playing State</b><br>
+   <em>Tap the squares in order</em>
+  </td>
+ </tr>
+ <tr>
+  <td align="center">
+   <img width="250" alt="Success State - Completed Round" src="Screenshots/ios-success.png">
+   <br><b>Success State</b><br>
+   <em>Nice job! You nailed it</em>
+  </td>
+  <td align="center">
+   <img width="250" alt="Failure State - Wrong Square" src="Screenshots/ios-failure.png">
+   <br><b>Failure State</b><br>
+   <em>Oops! Wrong square</em>
   </td>
  </tr>
 </table>

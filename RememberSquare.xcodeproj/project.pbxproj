@@ -15,6 +15,7 @@
 		8E06240D2F3AC15C00EEC612 /* StatusSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E06240C2F3AC15C00EEC612 /* StatusSectionView.swift */; };
 		8E06240F2F3AC16100EEC612 /* ControlsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E06240E2F3AC16100EEC612 /* ControlsSectionView.swift */; };
 		8E0624112F3AC16900EEC612 /* GridSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0624102F3AC16900EEC612 /* GridSectionView.swift */; };
+		8E861CA42F3C1F500062248C /* PreviewStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E861CA32F3C1F500062248C /* PreviewStates.swift */; };
 		8E98E3A22F3AC3E7001D540E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8E98E3A12F3AC3E7001D540E /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		8E06240C2F3AC15C00EEC612 /* StatusSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusSectionView.swift; sourceTree = "<group>"; };
 		8E06240E2F3AC16100EEC612 /* ControlsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsSectionView.swift; sourceTree = "<group>"; };
 		8E0624102F3AC16900EEC612 /* GridSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridSectionView.swift; sourceTree = "<group>"; };
+		8E861CA32F3C1F500062248C /* PreviewStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewStates.swift; sourceTree = "<group>"; };
 		8E98E3A12F3AC3E7001D540E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +112,7 @@
 				8E0624102F3AC16900EEC612 /* GridSectionView.swift */,
 				8E98E3A12F3AC3E7001D540E /* README.md */,
 				8E861CA22F3C1D4B0062248C /* Screenshots */,
+				8E861CA32F3C1F500062248C /* PreviewStates.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -281,6 +284,7 @@
 				8E0624072F3AC14700EEC612 /* GameState.swift in Sources */,
 				8E06240F2F3AC16100EEC612 /* ControlsSectionView.swift in Sources */,
 				8E0624092F3AC15000EEC612 /* SquareButton.swift in Sources */,
+				8E861CA42F3C1F500062248C /* PreviewStates.swift in Sources */,
 				8E0624112F3AC16900EEC612 /* GridSectionView.swift in Sources */,
 				8E06240B2F3AC15600EEC612 /* HeaderSectionView.swift in Sources */,
 			);

@@ -109,6 +109,7 @@
 				8E06240E2F3AC16100EEC612 /* ControlsSectionView.swift */,
 				8E0624102F3AC16900EEC612 /* GridSectionView.swift */,
 				8E98E3A12F3AC3E7001D540E /* README.md */,
+				8E861CA22F3C1D4B0062248C /* Screenshots */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,6 +121,13 @@
 				8E0623EF2F3ABFDF00EEC612 /* RememberSquareUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8E861CA22F3C1D4B0062248C /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

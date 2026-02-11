@@ -82,6 +82,201 @@ Red square = wrong tap ❌
 
 This project demonstrates clean SwiftUI architecture with a focus on separation of concerns:
 
+### Architecture Diagram
+
+```mermaid
+classDiagram
+    class ContentView {
+        -State~GameState~ game
+        +body: View
+        -headerSection: View
+        -gridSection: View
+        -statusSection: View
+        -controlsSection: View
+        -allowsInput: Bool
+        -statusText: String
+        -statusDetail: String
+        -primaryButtonTitle: String
+        +visualState(for: Int) SquareVisualState
+        +handleTap(index: Int)
+        +handleHaptic(for: TapOutcome)
+    }
+    
+    class GameState {
+        <<Observable>>
+        +Phase phase
+        +Int orderLength
+        +Array~Int~ sequence
+        +Array~Int~ userInputs
+        +Int? incorrectIndex
+        +Int? previewIndex
+        -Task? previewTask
+        +startGame()
+        +registerTap(index: Int) TapOutcome
+        +cancelPreview()
+        -previewSequence()
+    }
+    
+    class Phase {
+        <<enumeration>>
+        idle
+        previewing
+        playing
+        success
+        failure
+    }
+    
+    class TapOutcome {
+        <<enumeration>>
+        ignored
+        correct
+        incorrect
+        completed
+    }
+    
+    class HeaderSectionView {
+        +body: View
+    }
+    
+    class StatusSectionView {
+        +String statusText
+        +String? detail
+        +Bool showsSequence
+        +String sequenceDescription
+        +body: View
+    }
+    
+    class GridSectionView {
+        +Int totalSquares
+        +Int gridSide
+        +CGFloat spacing
+        +Bool allowsInput
+        +Function visualState
+        +Function onTap
+        +Function accessibilityLabel
+        +Function accessibilityValue
+        +body: View
+    }
+    
+    class ControlsSectionView {
+        +String primaryTitle
+        +Bool isPrimaryDisabled
+        +Binding~Int~ orderLength
+        +Int totalSquares
+        +Bool isStepperDisabled
+        +Function onPrimaryTap
+        +body: View
+    }
+    
+    class SquareButton {
+        +SquareVisualState state
+        +Bool isDisabled
+        +Function action
+        +body: View
+        -fillColor: Color
+        -borderColor: Color
+    }
+    
+    class SquareVisualState {
+        <<enumeration>>
+        neutral
+        preview
+        correct
+        incorrect
+    }
+    
+    ContentView --> GameState : owns
+    ContentView --> HeaderSectionView : composes
+    ContentView --> StatusSectionView : composes
+    ContentView --> GridSectionView : composes
+    ContentView --> ControlsSectionView : composes
+    GridSectionView --> SquareButton : renders 16x
+    GameState --> Phase : uses
+    GameState --> TapOutcome : returns
+    SquareButton --> SquareVisualState : displays
+    ContentView --> SquareVisualState : computes
+
+    note for ContentView "Main orchestrator\nComputes visual states\nHandles user interactions"
+    note for GameState "Single source of truth\nThread-safe with @MainActor\nAsync preview playback"
+    note for GridSectionView "Lazy grid layout\nDelegates tap handling\nNo internal state"
+```
+
+### Data Flow Diagram
+
+```mermaid
+flowchart TB
+    User([User Tap]) --> ContentView
+    ContentView --> |registerTap| GameState
+    GameState --> |TapOutcome| ContentView
+    ContentView --> |Haptic| Device[UIImpactFeedbackGenerator]
+    
+    StartButton([Start Button]) --> |startGame| GameState
+    GameState --> |Update phase| ContentView
+    GameState --> |previewSequence| AsyncTask[Task.sleep Preview]
+    AsyncTask --> |Update previewIndex| GameState
+    
+    GameState -.->|@Observable| ContentView
+    ContentView --> |Computed States| Sections[Section Views]
+    Sections --> |Visual State| SquareButton
+    
+    style GameState fill:#90EE90
+    style ContentView fill:#87CEEB
+    style User fill:#FFD700
+    style StartButton fill:#FFD700
+    style Device fill:#FFA500
+```
+
+### Component Interaction Flow
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant CV as ContentView
+    participant GS as GameState
+    participant Grid as GridSectionView
+    participant SB as SquareButton
+    
+    User->>CV: Tap "Start Game"
+    CV->>GS: startGame()
+    GS->>GS: Generate sequence
+    GS->>GS: phase = .previewing
+    
+    loop Preview Each Square
+        GS->>GS: Task.sleep(500ms)
+        GS-->>CV: previewIndex updated
+        CV->>Grid: visualState = .preview
+        Grid->>SB: Render yellow square
+        GS->>GS: Task.sleep(250ms)
+        GS-->>CV: previewIndex = nil
+    end
+    
+    GS->>GS: phase = .playing
+    GS-->>CV: State updated
+    CV->>Grid: allowsInput = true
+    
+    User->>SB: Tap square
+    SB->>Grid: onTap(index)
+    Grid->>CV: handleTap(index)
+    CV->>GS: registerTap(index)
+    
+    alt Correct Tap
+        GS-->>CV: return .correct
+        CV->>Grid: visualState = .correct
+        Grid->>SB: Render green square
+        CV->>CV: handleHaptic(.correct)
+    else Incorrect Tap
+        GS-->>CV: return .incorrect
+        GS->>GS: phase = .failure
+        CV->>Grid: visualState = .incorrect
+        Grid->>SB: Render red square
+        CV->>CV: handleHaptic(.incorrect)
+    else Sequence Complete
+        GS-->>CV: return .completed
+        GS->>GS: phase = .success
+        CV->>CV: handleHaptic(.completed)
+    end
+```
+
 ### Core Components
 
 - **`GameState.swift`** - Observable game logic and state management

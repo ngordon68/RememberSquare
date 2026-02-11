@@ -14,11 +14,6 @@ RememberSquare is a SwiftUI memory game. The app previews a sequence of highligh
 - Swift 6.2+
 - Xcode 16+
 
-## Run
-1. Open `RememberSquare.xcodeproj` in Xcode.
-2. Select an iOS 26 simulator or device.
-3. Build and run.
-
 ## Screenshots
 
 <table>
